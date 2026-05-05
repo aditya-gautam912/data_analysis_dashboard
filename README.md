@@ -1,16 +1,46 @@
-# Data Analysis & Visualization Dashboard
+# Retail Analytics Dashboard
 
-A portfolio-ready retail analytics project built with Python, Pandas, NumPy, Matplotlib, Seaborn, SQL, and Streamlit.
+[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
+[![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL%20%7C%20MySQL-green.svg)](#sql-integration)
+[![Tests](https://img.shields.io/badge/Tests-pytest-success.svg)](#run-tests)
 
-The project covers the full analytics workflow:
+Portfolio-ready retail analytics project built with Python, Pandas, NumPy, Matplotlib, Seaborn, SQL, and Streamlit. It demonstrates a complete analytics workflow from raw sales data to business insights, forecast evaluation, and an interactive dashboard.
 
-- data collection from CSV and SQL
-- data cleaning and preprocessing
-- feature engineering
-- exploratory data analysis
-- time series analysis and simple forecasting
-- interactive dashboarding
-- reporting and export
+## Highlights
+
+- end-to-end analytics pipeline using CSV, SQL, pandas, and Streamlit
+- real dataset support through external CSV ingestion and schema normalization
+- cleaning, preprocessing, feature engineering, and outlier-aware EDA
+- forecasting with holdout evaluation using `MAE`, `RMSE`, and `MAPE`
+- interactive dashboard with filters, KPI deltas, drilldowns, and CSV export
+- tested core modules with `pytest`
+
+## Tech Stack
+
+- Python
+- Pandas and NumPy
+- Matplotlib and Seaborn
+- SQLAlchemy with SQLite, PostgreSQL, and MySQL support
+- Streamlit
+- Pytest
+
+## Quick Start
+
+```bash
+pip install -r requirements.txt
+python -m src.main
+streamlit run src/dashboard.py
+```
+
+## What This Project Does
+
+- loads retail sales data from CSV and SQL
+- cleans missing values, duplicates, and data types
+- engineers business features such as revenue, profit, margin, and shipping delay
+- performs exploratory data analysis and trend detection
+- evaluates simple forecasting models on a holdout window
+- generates exportable charts, reports, and processed datasets
 
 ## Business Scenario
 
