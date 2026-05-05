@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS retail_sales (
+    order_id TEXT,
+    order_date TEXT,
+    ship_date TEXT,
+    region TEXT,
+    state TEXT,
+    city TEXT,
+    sales_channel TEXT,
+    customer_segment TEXT,
+    category TEXT,
+    sub_category TEXT,
+    product_name TEXT,
+    units_sold INTEGER,
+    unit_price REAL,
+    unit_cost REAL,
+    discount_pct REAL,
+    marketing_spend REAL,
+    inventory_days INTEGER,
+    returned INTEGER,
+    customer_rating REAL
+);

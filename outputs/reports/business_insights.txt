@@ -1,0 +1,11 @@
+Key Business Insights
+Total net revenue: 9,429,334.16
+Total profit: 2,619,646.09
+Average profit margin: 15.07%
+Top revenue category: Technology
+Top profit region: North
+Best performing sales channel: Online
+Highest revenue month: 2023-04
+Lowest revenue month: 2024-10
+Best forecast model on holdout window: Linear Regression (RMSE: 6,668.27)
+Average forecasted daily revenue for the next 30 days: 12,312.49

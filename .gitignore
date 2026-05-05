@@ -1,0 +1,17 @@
+.env
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# Local runtime artifacts
+data/retail_dashboard.db
+src/__pycache__/
+tests/__pycache__/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
