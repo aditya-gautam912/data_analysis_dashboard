@@ -2,8 +2,11 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app)
 [![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL%20%7C%20MySQL-green.svg)](#sql-integration)
 [![Tests](https://img.shields.io/badge/Tests-pytest-success.svg)](#run-tests)
+
+> **Live Demo:** [dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app](https://dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app)
 
 Portfolio-ready retail analytics project built with Python, Pandas, NumPy, Matplotlib, Seaborn, SQL, and Streamlit. It demonstrates a complete analytics workflow from raw sales data to business insights, forecast evaluation, and an interactive dashboard.
 
