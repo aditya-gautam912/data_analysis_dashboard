@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -13,10 +14,12 @@ REPORTS_DIR = OUTPUTS_DIR / "reports"
 SQL_DIR = BASE_DIR / "sql"
 
 RAW_DATA_PATH = RAW_DIR / "retail_sales_sample.csv"
+LIVE_DATA_PATH = RAW_DIR / "coingecko_live.csv"
 CLEAN_DATA_PATH = PROCESSED_DIR / "cleaned_retail_sales.csv"
 FEATURED_DATA_PATH = PROCESSED_DIR / "featured_retail_sales.csv"
 SQLITE_DB_PATH = DATA_DIR / "retail_dashboard.db"
 FORECAST_METRICS_PATH = REPORTS_DIR / "forecast_metrics.csv"
+DATA_SOURCE = os.getenv("DATA_SOURCE", "")
 
 
 def load_environment() -> None:
