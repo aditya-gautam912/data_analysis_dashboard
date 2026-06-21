@@ -205,8 +205,9 @@ CUSTOM_CSS = """
 
 @st.cache_data
 def load_dashboard_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    if not FEATURED_DATA_PATH.exists():
-        run_pipeline()
+    if FEATURED_DATA_PATH.exists():
+        FEATURED_DATA_PATH.unlink()
+    run_pipeline()
     df = pd.read_csv(FEATURED_DATA_PATH, parse_dates=["order_date", "ship_date"])
     forecast_metrics = pd.read_csv(FORECAST_METRICS_PATH) if FORECAST_METRICS_PATH.exists() else pd.DataFrame()
     return df, forecast_metrics

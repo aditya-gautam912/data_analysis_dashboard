@@ -13,8 +13,9 @@ from .dataset_adapter import normalize_retail_dataset
 
 
 def ensure_sample_dataset(path: Path = RAW_DATA_PATH) -> Path:
-    if not path.exists():
-        generate_sample_retail_dataset(path)
+    if path.exists():
+        path.unlink()
+    generate_sample_retail_dataset(path)
     return path
 
 
