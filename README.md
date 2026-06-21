@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker)](#docker)
 [![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL%20%7C%20MySQL-green.svg)](#sql-integration)
 [![CI](https://github.com/aditya-gautam912/data_analysis_dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/aditya-gautam912/data_analysis_dashboard/actions/workflows/ci.yml)
 
@@ -158,6 +159,14 @@ EXTERNAL_DATA_PATH=C:/path/to/your/retail_dataset.csv
 ```
 
 The loader will normalize supported external retail schemas into the project's analytics model.
+
+## Docker
+
+```bash
+docker compose up
+```
+
+Opens the dashboard at `http://localhost:8501`. Data and outputs persist between runs via mounted volumes.
 
 ## Run The Streamlit Dashboard
 
