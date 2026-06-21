@@ -33,5 +33,5 @@ def test_evaluate_forecasts_returns_metrics_for_two_models():
     assert len(train_df) == 45
     assert len(test_df) == 15
     assert len(evaluation_df) == 15
-    assert set(metrics_df["model"]) == {"Moving Average", "Linear Regression"}
+    assert set(metrics_df["model"]) == {"Moving Average", "Linear Regression", "ARIMA", "Ensemble"}
     assert {"mae", "rmse", "mape_pct"}.issubset(metrics_df.columns)
