@@ -4,7 +4,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app)
 [![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL%20%7C%20MySQL-green.svg)](#sql-integration)
-[![Tests](https://img.shields.io/badge/Tests-pytest-success.svg)](#run-tests)
+[![CI](https://github.com/aditya-gautam912/data_analysis_dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/aditya-gautam912/data_analysis_dashboard/actions/workflows/ci.yml)
 
 > **Live Demo:** [dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app](https://dataanalysisdashboard-mx5gpabkgccuahvv5gg6nr.streamlit.app)
 
