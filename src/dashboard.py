@@ -10,10 +10,10 @@ from matplotlib import pyplot as plt
 
 if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parent.parent))
-    from src.config import FEATURED_DATA_PATH
+    from src.config import FEATURED_DATA_PATH, FORECAST_METRICS_PATH
     from src.main import run_pipeline
 else:
-    from .config import FEATURED_DATA_PATH
+    from .config import FEATURED_DATA_PATH, FORECAST_METRICS_PATH
     from .main import run_pipeline
 
 
@@ -22,16 +22,12 @@ sns.set_theme(style="whitegrid")
 
 
 @st.cache_data
-def load_dashboard_data() -> pd.DataFrame:
+def load_dashboard_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     if not FEATURED_DATA_PATH.exists():
         run_pipeline()
     df = pd.read_csv(FEATURED_DATA_PATH, parse_dates=["order_date", "ship_date"])
-    return df
-
-
-@st.cache_data
-def load_pipeline_results() -> dict:
-    return run_pipeline()
+    forecast_metrics = pd.read_csv(FORECAST_METRICS_PATH) if FORECAST_METRICS_PATH.exists() else pd.DataFrame()
+    return df, forecast_metrics
 
 
 def metric_card(label: str, value: str) -> None:
@@ -48,8 +44,7 @@ def main() -> None:
     st.title("Data Analysis & Visualization Dashboard")
     st.caption("Retail sales, profitability, trend analysis, and forecasting")
 
-    df = load_dashboard_data()
-    comparison_df = load_pipeline_results()["forecast_metrics"]
+    df, comparison_df = load_dashboard_data()
 
     min_date = df["order_date"].min().date()
     max_date = df["order_date"].max().date()
