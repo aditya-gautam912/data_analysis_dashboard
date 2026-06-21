@@ -15,7 +15,7 @@ def prepare_daily_revenue(dataframe: pd.DataFrame) -> pd.DataFrame:
     return daily
 
 
-def simple_linear_forecast(daily_revenue: pd.DataFrame, future_days: int = 30) -> pd.DataFrame:
+def forecast_future(daily_revenue: pd.DataFrame, future_days: int = 30) -> pd.DataFrame:
     return _ensemble_forecast(daily_revenue, future_days)
 
 
@@ -166,7 +166,7 @@ def plot_forecast(daily_revenue: pd.DataFrame, future_forecast: pd.DataFrame, ou
     sns.lineplot(data=daily_revenue, x="order_date", y="net_revenue", label="Actual Revenue", linewidth=1.4)
     sns.lineplot(data=daily_revenue, x="order_date", y="moving_average_14", label="14-Day Moving Average", linewidth=2)
     sns.lineplot(data=future_forecast, x="order_date", y="forecast_revenue", label="Forecast", linestyle="--", linewidth=2)
-    plt.title("Revenue Forecast")
+    plt.title("Revenue Forecast (Ensemble: MA + LR + ARIMA)")
     plt.xlabel("Date")
     plt.ylabel("Revenue")
     plt.tight_layout()

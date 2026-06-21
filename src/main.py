@@ -17,7 +17,7 @@ from .forecasting import (
     plot_forecast,
     plot_forecast_backtest,
     prepare_daily_revenue,
-    simple_linear_forecast,
+    forecast_future,
 )
 from .preprocessing import preprocess_data
 from .reporting import export_datasets, export_excel_report, export_forecast_metrics, export_insights_text
@@ -65,7 +65,7 @@ def run_pipeline() -> dict:
 
     daily_revenue = prepare_daily_revenue(featured_df)
     forecast_evaluation_df, forecast_metrics_df = evaluate_forecasts(daily_revenue, test_days=30)
-    forecast_df = simple_linear_forecast(daily_revenue, future_days=30)
+    forecast_df = forecast_future(daily_revenue, future_days=30)
     forecast_chart = plot_forecast(daily_revenue, forecast_df, CHARTS_DIR)
     forecast_backtest_chart = plot_forecast_backtest(forecast_evaluation_df, CHARTS_DIR)
 
