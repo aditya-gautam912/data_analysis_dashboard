@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from statsmodels.tsa.arima.model import ARIMA
 
 
 def prepare_daily_revenue(dataframe: pd.DataFrame) -> pd.DataFrame:
@@ -15,23 +16,7 @@ def prepare_daily_revenue(dataframe: pd.DataFrame) -> pd.DataFrame:
 
 
 def simple_linear_forecast(daily_revenue: pd.DataFrame, future_days: int = 30) -> pd.DataFrame:
-    forecast_df = daily_revenue.copy().reset_index(drop=True)
-    forecast_df["day_index"] = np.arange(len(forecast_df))
-
-    slope, intercept = np.polyfit(forecast_df["day_index"], forecast_df["net_revenue"], 1)
-
-    last_date = forecast_df["order_date"].max()
-    future_index = np.arange(len(forecast_df), len(forecast_df) + future_days)
-    future_dates = pd.date_range(last_date + pd.Timedelta(days=1), periods=future_days, freq="D")
-    future_values = intercept + slope * future_index
-
-    future_df = pd.DataFrame(
-        {
-            "order_date": future_dates,
-            "forecast_revenue": np.maximum(future_values, 0),
-        }
-    )
-    return future_df
+    return _arima_forecast(daily_revenue, future_days)
 
 
 def train_test_split_time_series(daily_revenue: pd.DataFrame, test_days: int = 30) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -61,17 +46,46 @@ def _linear_regression_predictions(train_df: pd.DataFrame, test_df: pd.DataFrame
     return np.maximum(predictions, 0.0)
 
 
+def _arima_predictions(train_df: pd.DataFrame, test_df: pd.DataFrame) -> np.ndarray:
+    try:
+        model = ARIMA(train_df["net_revenue"], order=(1, 1, 1))
+        fitted = model.fit()
+        predictions = fitted.forecast(steps=len(test_df))
+        return np.maximum(predictions.values, 0.0)
+    except Exception:
+        return _linear_regression_predictions(train_df, test_df)
+
+
+def _arima_forecast(daily_revenue: pd.DataFrame, future_days: int = 30) -> pd.DataFrame:
+    forecast_df = daily_revenue.copy().reset_index(drop=True)
+    last_date = forecast_df["order_date"].max()
+    future_dates = pd.date_range(last_date + pd.Timedelta(days=1), periods=future_days, freq="D")
+    try:
+        model = ARIMA(forecast_df["net_revenue"], order=(1, 1, 1))
+        fitted = model.fit()
+        future_values = fitted.forecast(steps=future_days)
+        future_values = np.maximum(future_values.values, 0.0)
+    except Exception:
+        slope, intercept = np.polyfit(np.arange(len(forecast_df)), forecast_df["net_revenue"], 1)
+        future_index = np.arange(len(forecast_df), len(forecast_df) + future_days)
+        future_values = np.maximum(intercept + slope * future_index, 0.0)
+
+    return pd.DataFrame({"order_date": future_dates, "forecast_revenue": future_values})
+
+
 def evaluate_forecasts(daily_revenue: pd.DataFrame, test_days: int = 30) -> tuple[pd.DataFrame, pd.DataFrame]:
     train_df, test_df = train_test_split_time_series(daily_revenue, test_days=test_days)
 
     evaluation_df = test_df[["order_date", "net_revenue"]].copy()
     evaluation_df["moving_average_prediction"] = _moving_average_predictions(train_df, test_df)
     evaluation_df["linear_regression_prediction"] = _linear_regression_predictions(train_df, test_df)
+    evaluation_df["arima_prediction"] = _arima_predictions(train_df, test_df)
 
     metrics = []
     for model_column, model_name in [
         ("moving_average_prediction", "Moving Average"),
         ("linear_regression_prediction", "Linear Regression"),
+        ("arima_prediction", "ARIMA"),
     ]:
         error = evaluation_df["net_revenue"] - evaluation_df[model_column]
         mae = float(np.mean(np.abs(error)))
@@ -127,6 +141,15 @@ def plot_forecast_backtest(evaluation_df: pd.DataFrame, output_dir: Path) -> str
         linestyle=":",
         linewidth=2,
     )
+    if "arima_prediction" in evaluation_df.columns:
+        sns.lineplot(
+            data=evaluation_df,
+            x="order_date",
+            y="arima_prediction",
+            label="ARIMA Prediction",
+            linestyle="-.",
+            linewidth=2,
+        )
     plt.title("Forecast Backtest on Holdout Window")
     plt.xlabel("Date")
     plt.ylabel("Revenue")
