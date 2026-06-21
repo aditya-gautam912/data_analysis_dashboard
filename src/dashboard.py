@@ -233,33 +233,27 @@ def render_metric_card(label: str, value: str, delta: str, positive: bool) -> No
     )
 
 
-PLOTLY_TEMPLATE = {
-    "layout": {
-        "paper_bgcolor": "rgba(0,0,0,0)",
-        "plot_bgcolor": "rgba(0,0,0,0)",
-        "font": {"family": "Inter, sans-serif", "color": "rgba(255,255,255,0.7)"},
-        "title": {"font": {"size": 16, "color": "#fff", "weight": 700}},
-        "xaxis": {
-            "gridcolor": "rgba(255,255,255,0.04)",
-            "zerolinecolor": "rgba(255,255,255,0.06)",
-            "tickfont": {"size": 11},
-        },
-        "yaxis": {
-            "gridcolor": "rgba(255,255,255,0.04)",
-            "zerolinecolor": "rgba(255,255,255,0.06)",
-            "tickfont": {"size": 11},
-        },
-        "hoverlabel": {
-            "bgcolor": "#1a1a2e",
-            "font": {"color": "#fff", "size": 12},
-            "bordercolor": "rgba(108, 99, 255, 0.3)",
-        },
-        "margin": {"l": 10, "r": 10, "t": 40, "b": 10},
-        "legend": {
-            "font": {"size": 11, "color": "rgba(255,255,255,0.6)"},
-            "bgcolor": "rgba(0,0,0,0)",
-        },
-    }
+PLOTLY_LAYOUT = {
+    "paper_bgcolor": "rgba(0,0,0,0)",
+    "plot_bgcolor": "rgba(0,0,0,0)",
+    "font": {"family": "Inter, sans-serif", "color": "rgba(255,255,255,0.7)"},
+    "hoverlabel": {
+        "bgcolor": "#1a1a2e",
+        "font": {"color": "#fff", "size": 12},
+        "bordercolor": "rgba(108, 99, 255, 0.3)",
+    },
+    "margin": {"l": 10, "r": 10, "t": 40, "b": 10},
+    "legend": {
+        "font": {"size": 11, "color": "rgba(255,255,255,0.6)"},
+        "bgcolor": "rgba(0,0,0,0)",
+    },
+}
+
+
+AXIS_STYLE = {
+    "gridcolor": "rgba(255,255,255,0.04)",
+    "zerolinecolor": "rgba(255,255,255,0.06)",
+    "tickfont": {"size": 11},
 }
 
 
@@ -279,7 +273,9 @@ def create_trend_chart(df: pd.DataFrame, x_col: str, y_col: str, title: str) -> 
     )
     fig.update_layout(
         title=title,
-        **PLOTLY_TEMPLATE["layout"],
+        xaxis=AXIS_STYLE,
+        yaxis=AXIS_STYLE,
+        **PLOTLY_LAYOUT,
         hovermode="x unified",
     )
     return fig
@@ -300,10 +296,9 @@ def create_category_chart(df: pd.DataFrame) -> go.Figure:
     )
     fig.update_layout(
         title="Revenue by Category",
-        xaxis_title=None,
-        yaxis_title="Revenue",
-        **PLOTLY_TEMPLATE["layout"],
-        yaxis={"gridcolor": "rgba(255,255,255,0.04)", "tickfont": {"size": 11}},
+        xaxis={"title": None, **AXIS_STYLE},
+        yaxis={"title": "Revenue", **AXIS_STYLE},
+        **PLOTLY_LAYOUT,
     )
     return fig
 
@@ -320,10 +315,10 @@ def create_profit_chart(df: pd.DataFrame) -> go.Figure:
     )
     fig.update_layout(
         title="Profit Distribution",
-        xaxis_title="Profit",
-        yaxis_title="Frequency",
+        xaxis={"title": "Profit", **AXIS_STYLE},
+        yaxis={"title": "Frequency", **AXIS_STYLE},
         bargap=0.05,
-        **PLOTLY_TEMPLATE["layout"],
+        **PLOTLY_LAYOUT,
     )
     return fig
 
@@ -346,10 +341,9 @@ def create_heatmap(df: pd.DataFrame, columns: list[str]) -> go.Figure:
     )
     fig.update_layout(
         title="Correlation Heatmap",
-        xaxis=dict(tickangle=45, tickfont=dict(size=9)),
-        yaxis=dict(tickfont=dict(size=9)),
-        **PLOTLY_TEMPLATE["layout"],
-        margin={"l": 10, "r": 10, "t": 40, "b": 120},
+        xaxis={"tickangle": 45, "tickfont": {"size": 9}, **AXIS_STYLE},
+        yaxis={"tickfont": {"size": 9}, **AXIS_STYLE},
+        **PLOTLY_LAYOUT,
     )
     return fig
 
@@ -376,8 +370,10 @@ def create_forecast_chart(df: pd.DataFrame) -> go.Figure:
     )
     fig.update_layout(
         title="Revenue Trend with Smoothing",
+        xaxis=AXIS_STYLE,
+        yaxis=AXIS_STYLE,
         hovermode="x unified",
-        **PLOTLY_TEMPLATE["layout"],
+        **PLOTLY_LAYOUT,
     )
     return fig
 
