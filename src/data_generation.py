@@ -23,7 +23,7 @@ def generate_sample_retail_dataset(output_path: Path, random_seed: int = 42, row
     channels = ["Online", "Retail Store", "Distributor"]
     segments = ["Consumer", "Corporate", "Home Office", "Small Business"]
 
-    dates = pd.date_range("2023-01-01", "2024-12-31", freq="D")
+    dates = pd.date_range("2025-01-01", "2026-12-31", freq="D")
     sampled_dates = rng.choice(dates, size=rows, replace=True)
 
     records = []
